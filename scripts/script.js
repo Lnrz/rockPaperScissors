@@ -2,9 +2,6 @@
  * 0 corrisponde a "sasso"
  * 1 corrisponde a "carta"
  * 2 corrisponde a "forbici"
- * 0 < 1 MA 0 > 2
- * 1 < 2 MA 1 > 0
- * 2 < 0 MA 2 > 1
 */
 
 function computerSelection() {
@@ -19,7 +16,7 @@ function convertIntoString(n) {
             return "Sasso";
         case 1:
             return "Carta";
-        default:
+        case 2:
             return "Forbici";
     }
 }
@@ -37,24 +34,59 @@ function convertIntoNum(playerSelection) {
         case "forbici":
             return 2;
         default:
-            return 0;
+            return -1;
     }
 }
 
-//mettere return negli if
 function computerPlay(playerSelection, computerSelection) {
     
-    playerSelection = convertIntoNum(playerSelection);
-
-    let risultato;
-
     if (playerSelection == computerSelection) {
-        risultato = "Pareggio! ";
+        return `Pareggio!`;
 
     } else if (playerSelection == (computerSelection - 1) % 3) {
-        risultato = "Sconfitta! ";
+        return `Sconfitta! ${convertIntoString(computerSelection)} vince su ${convertIntoString(playerSelection)}`;
 
     } else {
-        risultato = "Vittoria! ";
+        return `Vittoria! ${convertIntoString(playerSelection)} vince su ${convertIntoString(computerSelection)}`;
+    }
+}
+
+function game() {
+
+    let playerSelection = -1;
+    let playerWins = 0;
+    let computerWins = 0;
+    let result;
+
+    for (let i = 0; i < 5; i++, playerSelection = -1) {
+
+        while (playerSelection < 0) {
+            
+            playerSelection = prompt("Sasso, carta o forbici?");
+
+            playerSelection = convertIntoNum(playerSelection);
+
+            if(playerSelection == -1) console.log(`Inserire un valore valido`);
+        }
+
+        result = computerPlay(playerSelection, computerSelection());
+
+        console.log(result);
+
+        result = result.charAt(0);
+
+        if (result == `V`) {
+            playerWins++;
+        } else if (result == `S`) {
+            computerWins++;
+        }
+    }
+
+    if (playerWins > computerWins) {
+        console.log(`Hai vinto con ${playerWins} punti!`);
+    } else if (playerWins < computerWins) {
+        console.log(`Ha vinto il computer con ${computerWins} punti!`);
+    } else {
+        console.log(`Pareggio con ${playerWins} punti a testa!`);
     }
 }
