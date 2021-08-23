@@ -1,0 +1,9 @@
+html {
+    min-height: 100%;
+}
+
+:root {
+    background-image: linear-gradient(black 55%,
+    rgb(66, 66, 66));
+    background-repeat: no-repeat;
+}

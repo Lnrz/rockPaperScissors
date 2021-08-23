@@ -51,6 +51,7 @@ function computerPlay(playerSelection, computerSelection) {
     }
 }
 
+/*
 function game() {
 
     let playerSelection = -1;
@@ -90,3 +91,4 @@ function game() {
         console.log(`Pareggio con ${playerWins} punti a testa!`);
     }
 }
+*/
