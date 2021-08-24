@@ -27,31 +27,34 @@ body {
     top: 16vh;
     height: 60vh;
     width: 50vw;
-    background-color: red;
+    //background-color: red;
 }
 
 #computerChoose {
-    position: relative;
+    position: absolute;
     left: 15vw;
     height: 15vh;
     width: 20vw;
-    background-color: blue;
+    //background-color: blue;
 }
 
 #result {
-    position: relative;
+    position: absolute;
+    top: 15vh;
     left: 10vw;
     height: 15vh;
     width: 30vw;
-    background-color: yellow;
+    //background-color: yellow;
 }
 
 #UI {
-    position: relative;
-    top: 5vh;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 35vh;
     width: 100%;
     height: 25vh;
-    background-color: green;
+    //background-color: green;
 }
 
 .points {
@@ -59,9 +62,61 @@ body {
     top: 0;
     width: 6vw;
     height: 50vh;
-    background: white;
+    //background: white;
 }
 
 #computerVictories {
     right: 0;
+}
+
+#result > p {
+    font-size: 20px;
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(100, 100, 20);
+}
+
+#chooseImages {
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    //background-color: gray;
+}
+
+#chooseImages > img {
+    width: 12vw;
+    height: 12vh;
+    opacity: 0.1;
+}
+
+button {
+    font-size: 15px;
+    font-family:'Times New Roman', Times, serif;
+    position: relative;
+    top: 10%;
+    left: 32.5%;
+    width: 35%;
+    height: 18%;
+    border-radius: 10px;
+    outline: none;
+    background-color: transparent;
+    padding: 0;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    border: 1px 1px 1px 1px;
+    opacity: 0.3;
+}
+
+button:active {
+    border-style: solid;
+    background-color: white;
+    color: black;
+    animation-fill-mode: backwards;
+    transition-duration: 500ms;
+}
+
+button:hover {
+    opacity: 0.8;
 }
