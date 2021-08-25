@@ -40,7 +40,7 @@ body {
 
 #result {
     position: absolute;
-    top: 15vh;
+    top: 18vh;
     left: 10vw;
     height: 15vh;
     width: 30vw;
@@ -73,7 +73,12 @@ body {
     font-size: 20px;
     text-align: center;
     font-family: sans-serif;
-    color: rgb(100, 100, 20);
+    color: rgb(160, 160, 160);
+}
+
+img {
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
 }
 
 #chooseImages {
@@ -86,8 +91,12 @@ body {
 
 #chooseImages > img {
     width: 12vw;
-    height: 12vh;
+    height: 15vh;
     opacity: 0.1;
+}
+
+#chooseImages > img:hover {
+    opacity: 0.8;
 }
 
 button {
@@ -114,9 +123,32 @@ button:active {
     background-color: white;
     color: black;
     animation-fill-mode: backwards;
-    transition-duration: 500ms;
+    opacity: 0.8;
 }
 
 button:hover {
     opacity: 0.8;
+}
+
+#computerChoose > img {
+    position: relative;
+    left: 4vw;
+    width: 12vw;
+    height: 15vh;
+    opacity: 0.8;
+}
+
+.points {
+    display: flex;
+    flex-direction: column;
+}
+
+.points > img {
+    width: 5vw;
+    height: 8vh;
+    opacity: 0.88;
+}
+
+.selected  {
+    opacity: 0.8 !important;
 }
