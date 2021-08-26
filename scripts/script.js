@@ -34,6 +34,7 @@ function convertIntoNum(playerSelection) {
     }
 }
 
+
 function isPlayerVictory(computerSelection, playerSelection) {
     
     if (playerSelection == computerSelection) {
@@ -47,8 +48,6 @@ function isPlayerVictory(computerSelection, playerSelection) {
     }
 }
 
-const imagesList = [...document.querySelectorAll("#chooseImages > img")];
-const button = document.querySelector("button");
 
 function selectUnselect(obj) {
     
@@ -58,6 +57,7 @@ function selectUnselect(obj) {
 
     slcImg.classList.add("selected");
 }
+
 
 function addComputerChoose(n) {
 
@@ -77,44 +77,110 @@ function addComputerChoose(n) {
     }
 
     computerChoose.appendChild(img);
+
+    return img;
 }
+
 
 function addParagraph(n) {
 
-    const div = document.querySelector("#result");
+    const resultDiv = document.querySelector("#result");
+
     const p = document.createElement("p");
 
     switch (n) {
         case -1:
             p.textContent = "Hai perso!";
+            p.style.color = "#69322D";
             break;
         case 0:
             p.textContent = "Pareggio!";
             break;
         case 1:
             p.textContent = "Hai vinto!";
+            p.style.color = "#A5A541";
             break;
     }
 
-    div.appendChild(p);
+    resultDiv.appendChild(p);
+
+    return p;
 }
 
-function addPoint(n) {
 
-    if (!n) return;
+function addPoint(winner) {
 
     const img = document.createElement("img");
     img.setAttribute("src", "images/point.png");
 
-    const div = document.querySelector(
-        (n > 0) ? "#playerVictories" :
-        "#computerVictories"
-    );
-
-    div.appendChild(img);
+    winner.appendChild(img);
 }
 
-function playGame() {
+
+function clearScreen(slcImg, resultPara, computerIcon) {
+
+    slcImg.classList.remove("selected");
+
+    resultPara.remove();
+
+    computerIcon.remove();
+
+    switchClickable(true);
+}
+
+
+function switchClickable(b) {
+
+    document.querySelectorAll("#chooseImages > img")
+        .forEach(img => img.style.pointerEvents = (b)? "auto" : "none");
+
+    document.querySelector("button").style.pointerEvents = (b)? "auto" : "none";
+}
+
+
+async function resetGame(winner) {
+
+    document.querySelectorAll(".points")
+        .forEach(div => {
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+        }
+    );
+
+    const div = document.querySelector("#blackCurtain");
+    const p = document.createElement("p");
+    const img = document.createElement("img");
+
+    let boolean = winner.getAttribute("id") == "playerVictories";
+
+    p.innerText = (boolean) ? "Hai sconfitto il computer!" :
+        "Hai perso contro il computer!"
+    ;
+    
+    img.setAttribute("src", (boolean) ?
+        "images/happyFace.png" :
+        "images/sadFace.png")
+    ;
+
+    div.style.pointerEvents = "auto";
+    div.style.backgroundColor = "black";
+    div.appendChild(img);
+    div.appendChild(p);
+
+    await new Promise(r => setTimeout(r, 1500));
+
+    div.removeChild(p);
+    div.removeChild(img);
+    div.style.backgroundColor = "transparent";
+    div.style.pointerEvents = "none";
+
+}
+
+
+async function playGame() {
+
+    switchClickable(false);
 
     let slcImg = imagesList.filter(img => {
         return img.classList.value.includes("selected");
@@ -124,21 +190,42 @@ function playGame() {
 
     if (!slcImg) {
         alert("Selezionare una delle icone per giocare")
+        switchClickable(true);
         return;
     }
 
     let pcChoose = computerSelection();
 
-    addComputerChoose(pcChoose);
+    const computerIcon = addComputerChoose(pcChoose);
 
     let result = isPlayerVictory( pcChoose,
         convertIntoNum(slcImg.getAttribute("id"))
     );
 
-    addParagraph(result);
+    const resultPara = addParagraph(result);
 
-    addPoint(result);
+    const winnerPoints = document.querySelector(
+        (result > 0) ? "#playerVictories" :
+        "#computerVictories"
+    );
+    
+    if (result) {
+        addPoint(winnerPoints);
+    }
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    clearScreen(slcImg, resultPara, computerIcon);
+
+    if (winnerPoints.childElementCount == 5) {
+        resetGame(winnerPoints);
+    }
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+const imagesList = [...document.querySelectorAll("#chooseImages > img")];
+const button = document.querySelector("button");
 
 imagesList.forEach(img => img.addEventListener("click", selectUnselect));
 
