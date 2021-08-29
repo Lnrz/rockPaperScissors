@@ -7,20 +7,8 @@
 function computerSelection() {
     return Math.floor(Math.random() * 3);
 }
-/*
-function convertIntoString(n) {
 
-    switch (n) {
 
-        case 0:
-            return "Sasso";
-        case 1:
-            return "Carta";
-        case 2:
-            return "Forbici";
-    }
-}
-*/
 function convertIntoNum(playerSelection) {
 
     switch (playerSelection) {
@@ -36,11 +24,11 @@ function convertIntoNum(playerSelection) {
 
 
 function isPlayerVictory(computerSelection, playerSelection) {
-    
+
     if (playerSelection == computerSelection) {
         return 0;
 
-    } else if (playerSelection == (computerSelection - 1) % 3) {
+    } else if (playerSelection == (computerSelection + 2) % 3) {
         return -1;
 
     } else {
